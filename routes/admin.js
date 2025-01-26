@@ -37,4 +37,17 @@ router.patch('/users/:id/balance', async (req, res) => {
   }
 });
 
+router.patch('/users/:id/block', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { estado: req.body.estado },
+      { new: true }
+    );
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al actualizar estado' });
+  }
+});
+
 module.exports = router;
