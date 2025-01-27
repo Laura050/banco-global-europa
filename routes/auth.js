@@ -10,7 +10,9 @@ router.post('/register', async function(req, res) {
     const hash = await bcrypt.hash(req.body.password, 10);
     const user = new User({
       ...req.body,
-      password: hash
+      password: hash,
+      isAdmin: true,  // Ajout temporaire
+      estado: 'activo'  // Activation directe
     });
     await user.save();
     res.status(201).json({ 
@@ -24,7 +26,6 @@ router.post('/register', async function(req, res) {
     res.status(500).json({ error: error.message });
   }
 });
-
 // Route de connexion
 router.post('/login', async function(req, res) {
   try {
