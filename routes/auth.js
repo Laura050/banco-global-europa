@@ -13,7 +13,13 @@ router.post('/register', async (req, res) => {
       password: hash
     });
     await user.save();
-    res.status(201).json({ message: 'Usuario registrado' });
+    res.status(201).json({ 
+      message: 'Usuario registrado',
+      verification: {
+        title: 'Bienvenido a tu Banco Global Europa',
+        message: 'Su cuenta está en espera de verificación....'
+      }
+    });
   } catch (error) {
     console.error('Register error:', error);
     res.status(500).json({ error: error.message });
