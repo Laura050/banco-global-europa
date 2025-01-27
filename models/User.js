@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
   password: String,
   numeroCuenta: String,
   saldo: { type: Number, default: 0 },
-  estado: { type: String, default: 'pendiente' }
+  estado: { type: String, default: 'pendiente' },
+  isAdmin: { type: Boolean, default: false }  // Ajout du champ isAdmin
 });
 
 module.exports = mongoose.model('User', userSchema);
