@@ -26,10 +26,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', authenticateUser, userRoutes);
 app.use('/api/admin', authenticateUser, checkAdmin, adminRoutes);
 
+// Route principale
 app.get('/', (req, res) => {
   res.json({ message: 'Bienvenido a Banco Global Europa API' });
 });
 
+// Route santé
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
@@ -44,3 +46,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = app;
