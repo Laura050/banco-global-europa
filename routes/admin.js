@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// Obtenir tous les utilisateurs
-router.get('/users', async (req, res) => {
+// Liste des utilisateurs
+router.get('/users', async function(req, res) {
   try {
     const users = await User.find();
     res.json(users);
@@ -12,8 +12,8 @@ router.get('/users', async (req, res) => {
   }
 });
 
-// Valider le compte d'un utilisateur
-router.patch('/users/:id/validate', async (req, res) => {
+// Validation de compte
+router.patch('/users/:id/validate', async function(req, res) {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -26,8 +26,8 @@ router.patch('/users/:id/validate', async (req, res) => {
   }
 });
 
-// Mettre à jour le solde
-router.patch('/users/:id/balance', async (req, res) => {
+// Mise à jour du solde
+router.patch('/users/:id/balance', async function(req, res) {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -40,8 +40,8 @@ router.patch('/users/:id/balance', async (req, res) => {
   }
 });
 
-// Bloquer/débloquer un compte
-router.patch('/users/:id/block', async (req, res) => {
+// Blocage/déblocage de compte
+router.patch('/users/:id/block', async function(req, res) {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -54,8 +54,8 @@ router.patch('/users/:id/block', async (req, res) => {
   }
 });
 
-// Promouvoir un utilisateur en administrateur
-router.patch('/users/:id/promote', async (req, res) => {
+// Promotion en administrateur
+router.patch('/users/:id/promote', async function(req, res) {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
