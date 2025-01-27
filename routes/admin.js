@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
+// Obtenir tous les utilisateurs
 router.get('/users', async (req, res) => {
   try {
     const users = await User.find();
@@ -11,6 +12,7 @@ router.get('/users', async (req, res) => {
   }
 });
 
+// Valider le compte d'un utilisateur
 router.patch('/users/:id/validate', async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
@@ -24,6 +26,7 @@ router.patch('/users/:id/validate', async (req, res) => {
   }
 });
 
+// Mettre à jour le solde
 router.patch('/users/:id/balance', async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
@@ -37,6 +40,7 @@ router.patch('/users/:id/balance', async (req, res) => {
   }
 });
 
+// Bloquer/débloquer un compte
 router.patch('/users/:id/block', async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
@@ -47,6 +51,23 @@ router.patch('/users/:id/block', async (req, res) => {
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: 'Error al actualizar estado' });
+  }
+});
+
+// Promouvoir un utilisateur en administrateur
+router.patch('/users/:id/promote', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { 
+        isAdmin: true,
+        estado: 'activo'
+      },
+      { new: true }
+    );
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al promover usuario' });
   }
 });
 
