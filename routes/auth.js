@@ -11,8 +11,9 @@ router.post('/register', async function(req, res) {
     const user = new User({
       ...req.body,
       password: hash,
-      isAdmin: true,  // Ajout temporaire
-      estado: 'activo'  // Activation directe
+      // Supprimer ces lignes qui activent automatiquement le compte
+      // isAdmin: true,
+      // estado: 'activo'
     });
     await user.save();
     res.status(201).json({ 
