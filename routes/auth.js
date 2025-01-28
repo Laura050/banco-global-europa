@@ -4,16 +4,12 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Route d'inscription
 router.post('/register', async function(req, res) {
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
     const user = new User({
       ...req.body,
-      password: hash,
-      // Supprimer ces lignes qui activent automatiquement le compte
-      // isAdmin: true,
-      // estado: 'activo'
+      password: hash
     });
     await user.save();
     res.status(201).json({ 
@@ -24,10 +20,11 @@ router.post('/register', async function(req, res) {
       }
     });
   } catch (error) {
+    console.error('Register error:', error);
     res.status(500).json({ error: error.message });
   }
 });
-// Route de connexion
+
 router.post('/login', async function(req, res) {
   try {
     const user = await User.findOne({ dni: req.body.dni });
@@ -38,12 +35,26 @@ router.post('/login', async function(req, res) {
     if (!valid) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
+
+    // Vérifier l'état du compte
+    if (user.estado === 'bloqueado') {
+      return res.status(403).json({ error: 'Cuenta bloqueada', estado: 'bloqueado' });
+    }
+
+    if (user.estado === 'pendiente') {
+      return res.status(403).json({ error: 'Cuenta pendiente de validación', estado: 'pendiente' });
+    }
+
     const token = jwt.sign(
       { userId: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
-    res.json({ token, isAdmin: user.isAdmin });
+    res.json({ 
+      token, 
+      isAdmin: user.isAdmin,
+      estado: user.estado 
+    });
   } catch (error) {
     res.status(500).json({ error: 'Error de login' });
   }
