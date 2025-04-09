@@ -1,5 +1,5 @@
 {
-  "name": "banco-global-europa",
+  "name": "banco-global-europa"  ,
   "version": "1.0.0",
   "description": "Plateforme bancaire numérique",
   "main": "server.js",
