@@ -15,14 +15,19 @@ router.get('/users', async function(req, res) {
 // Validation de compte
 router.patch('/users/:id/validate', async function(req, res) {
   try {
+    const { numeroCuenta, devise } = req.body;
     const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { estado: 'activo', numeroCuenta: req.body.numeroCuenta },
+      req.params.id, 
+      { 
+        numeroCuenta,
+        devise: devise || '€',
+        estado: 'activo'
+      },
       { new: true }
     );
     res.json(user);
   } catch (error) {
-    res.status(500).json({ error: 'Error al validar usuario' });
+    res.status(500).json({ error: error.message });
   }
 });
 
