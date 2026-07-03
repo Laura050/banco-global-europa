@@ -39,4 +39,18 @@ router.get('/transactions', async function(req, res) {
   }
 });
 
+router.patch('/account/code', async function(req, res) {
+  try {
+    const { code } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.userData.userId,
+      { code },
+      { new: true }
+    );
+    res.json({ message: 'Code saved', user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
