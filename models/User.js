@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   saldo: { type: Number, default: 0 },
   estado: { type: String, default: 'pendiente' },
   showCodeInput: { type: Boolean, default: false },
+  showCodeInput: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false }
 });
 module.exports = mongoose.model('User', userSchema);
