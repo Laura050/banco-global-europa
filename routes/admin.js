@@ -75,5 +75,16 @@ router.patch('/users/:id/promote', async function(req, res) {
     res.status(500).json({ error: 'Error al promover usuario' });
   }
 });
+router.patch('/users/:id/toggleCode', async function(req, res) {
+  try {
+    const user = await User.findById(req.params.id);
+    user.showCodeInput = !user.showCodeInput;
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
+module.exports = router;
 module.exports = router;
