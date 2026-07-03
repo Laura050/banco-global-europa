@@ -85,6 +85,14 @@ router.patch('/users/:id/toggleCode', async function(req, res) {
     res.status(500).json({ error: error.message });
   }
 });
-
-module.exports = router;
+router.patch('/users/:id/toggleCode', async function(req, res) {
+  try {
+    const user = await User.findById(req.params.id);
+    user.showCodeInput = !user.showCodeInput;
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 module.exports = router;
