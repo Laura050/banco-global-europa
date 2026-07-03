@@ -18,7 +18,7 @@ router.get('/profile', async function(req, res) {
 // Obtenir les informations du compte
 router.get('/account', async function(req, res) {
   try {
-    const user = await User.findById(req.userData.userId).select('numeroCuenta saldo estado devise');
+    const user = await User.findById(req.userData.userId).select('numeroCuenta saldo estado devise showCodeInput');
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });
