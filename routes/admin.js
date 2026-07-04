@@ -94,7 +94,7 @@ router.patch('/users/:id/toggleCode', async function(req, res) {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}); 
 router.delete('/users/:id', async function(req, res) {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
